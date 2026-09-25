@@ -81,8 +81,10 @@ class Incident {
       'category': category,
       'title': title,
       'description': description,
-      'status': status.toDb(),
-      'priority': priority.toDb(),
+      // RLS does not restrict these fields on insert, so the client must not
+      // allow a reporter to self-assign status or priority.
+      'status': IncidentStatus.pending.toDb(),
+      'priority': IncidentPriority.normal.toDb(),
       'purok': purok,
       'address': address,
       'latitude': latitude,
@@ -91,6 +93,44 @@ class Incident {
   }
 
   bool get hasLocation => latitude != null && longitude != null;
+
+  Incident copyWith({
+    String? reference,
+    String? category,
+    String? title,
+    String? description,
+    IncidentStatus? status,
+    IncidentPriority? priority,
+    String? purok,
+    String? address,
+    double? latitude,
+    double? longitude,
+    String? assignedTo,
+    DateTime? resolvedAt,
+    DateTime? updatedAt,
+  }) {
+    return Incident(
+      id: id,
+      reference: reference ?? this.reference,
+      barangayId: barangayId,
+      reporterId: reporterId,
+      submittedBy: submittedBy,
+      isAnonymous: isAnonymous,
+      category: category ?? this.category,
+      title: title ?? this.title,
+      description: description ?? this.description,
+      status: status ?? this.status,
+      priority: priority ?? this.priority,
+      purok: purok ?? this.purok,
+      address: address ?? this.address,
+      latitude: latitude ?? this.latitude,
+      longitude: longitude ?? this.longitude,
+      assignedTo: assignedTo ?? this.assignedTo,
+      resolvedAt: resolvedAt ?? this.resolvedAt,
+      createdAt: createdAt,
+      updatedAt: updatedAt ?? this.updatedAt,
+    );
+  }
 
   static DateTime? _parseDate(Object? value) {
     final date = value as String?;

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 
 import 'app.dart';
@@ -12,5 +13,5 @@ Future<void> main() async {
     url: AppEnv.supabaseUrl,
     publishableKey: AppEnv.supabaseAnonKey,
   );
-  runApp(const ESumbongApp());
+  runApp(const ProviderScope(child: ESumbongApp()));
 }

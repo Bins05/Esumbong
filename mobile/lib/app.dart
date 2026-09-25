@@ -1,28 +1,19 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import 'core/theme.dart';
+import 'router.dart';
 
-class ESumbongApp extends StatelessWidget {
+class ESumbongApp extends ConsumerWidget {
   const ESumbongApp({super.key});
 
   @override
-  Widget build(BuildContext context) {
-    return MaterialApp(
+  Widget build(BuildContext context, WidgetRef ref) {
+    return MaterialApp.router(
       debugShowCheckedModeBanner: false,
       title: 'E-Sumbong',
       theme: buildAppTheme(),
-      home: const SetupCompleteScreen(),
-    );
-  }
-}
-
-class SetupCompleteScreen extends StatelessWidget {
-  const SetupCompleteScreen({super.key});
-
-  @override
-  Widget build(BuildContext context) {
-    return const Scaffold(
-      body: Center(child: Text('E-Sumbong - Setup Complete')),
+      routerConfig: ref.watch(routerProvider),
     );
   }
 }
