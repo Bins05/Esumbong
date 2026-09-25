@@ -4,6 +4,15 @@ A mobile-first incident reporting system configured for **Barangay Palatiw, Pasi
 
 Interactive Pasig City mapping is provided by Leaflet and React-Leaflet using OpenStreetMap tiles. The resident form supports tap-to-pin coordinates, while `/admin/map` provides a filterable operations map. For high-volume production deployments, configure a commercial or self-hosted OSM-compatible tile provider and retain visible OpenStreetMap attribution.
 
+## Mobile installation
+
+The application includes a web app manifest, standalone display metadata, safe-area support, and mobile bottom navigation. After deploying over HTTPS on Vercel:
+
+- Android/Chrome: open the browser menu and select **Install app** or **Add to Home screen**.
+- iPhone/Safari: tap **Share**, then **Add to Home Screen**.
+
+The installed PWA opens without ordinary browser chrome and uses the E-Sumbong home-screen icon.
+
 ## Run locally
 
 ```bash

@@ -1,11 +1,16 @@
 import { createServerClient, type CookieOptions } from "@supabase/ssr";
 import { NextResponse, type NextRequest } from "next/server";
+import { getSupabasePublicConfig } from "@/lib/supabase/env";
 
 export async function proxy(request: NextRequest) {
   let response = NextResponse.next({ request });
-  const url = process.env.NEXT_PUBLIC_SUPABASE_URL;
-  const key = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY;
-  if (!url || !key) return response; // Allows the included demo UI to run without credentials.
+  let config;
+  try {
+    config = getSupabasePublicConfig();
+  } catch {
+    return response; // Public pages remain available while deployment credentials are corrected.
+  }
+  const { url, key } = config;
   const supabase = createServerClient(url, key, {
     cookies: {
       getAll: () => request.cookies.getAll(),
